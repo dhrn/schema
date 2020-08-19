@@ -1,0 +1,79 @@
+{
+  "allOf": [
+    {
+      "$ref": "#/definitions/schema_model_extensions_schema"
+    }
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Extensions of file model definition json schema",
+  "definitions": {
+    "schema_model_extensions_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "description": "Model extensions schema",
+      "title": "Model extensions schema",
+      "type": "object",
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "pattern": "^[a-z]([-a-z0-9]{0,24}[a-z0-9])?$",
+          "description": "The name of the model",
+          "type": "string",
+          "maxLength": 26
+        },
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    }
+  },
+  "properties": {
+    "extensions": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "format": "date-time",
+          "description": "File date creation",
+          "type": "string"
+        },
+        "name": {
+          "pattern": "([a-zA-Z0-9\\s_\\\\.\\-\\(\\):])+(\\.[a-zA-Z0-9]+)*$",
+          "description": "The file name including the extension",
+          "type": "string"
+        },
+        "uri": {
+          "pattern": "\\w+:(\\/?\\/?)[^\\s]+",
+          "description": "The uri of the resource",
+          "type": "string"
+        },
+        "content": {
+          "description": "Metadata of the content of the file",
+          "type": "object",
+          "properties": {
+            "sizeInBytes": {
+              "type": "integer"
+            },
+            "mimeTypeName": {
+              "type": "string"
+            },
+            "mimeType": {
+              "type": "string"
+            },
+            "encoding": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "uri"
+      ]
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "allOf": [
+    {
+      "$ref": "#/definitions/schema_model_extensions_schema"
+    }
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Extensions of file model definition json schema",
+  "definitions": {
+    "schema_model_extensions_schema": {
+      "$schema": "http://json-schema.org/draft-07/schema",
+      "description": "Model extensions schema",
+      "title": "Model extensions schema",
+      "type": "object",
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "pattern": "^[a-z]([-a-z0-9]{0,24}[a-z0-9])?$",
+          "description": "The name of the model",
+          "type": "string",
+          "maxLength": 26
+        },
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "variablesObject": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "Variable name",
+            "type": "string"
+          },
+          "id": {
+            "description": "Id",
+            "type": "string"
+          },
+          "type": {
+            "description": "Column type",
+            "type": "string",
+            "enum": [
+              "string",
+              "integer",
+              "boolean",
+              "date",
+              "datetime",
+              "people",
+              "group",
+              "file",
+              "json"
+            ]
+          },
+          "value": {
+            "description": "Variable value"
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ]
+      }
+    }
+  },
+  "properties": {
+    "extensions": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "format": "date-time",
+          "description": "File date creation",
+          "type": "string"
+        },
+        "variables": {
+          "description": "Possible Variable of the Script (optional)",
+          "$ref": "#/definitions/variablesObject"
+        },
+        "name": {
+          "pattern": "([a-zA-Z0-9\\s_\\\\.\\-\\(\\):])+(\\.[a-zA-Z0-9]+)*$",
+          "description": "The file name including the extension",
+          "type": "string"
+        },
+        "language": {
+          "enum": [
+            "java",
+            "js",
+            "C",
+            "ruby",
+            "R",
+            "python"
+          ]
+        },
+        "uri": {
+          "pattern": "\\w+:(\\/?\\/?)[^\\s]+",
+          "description": "The uri of the resource",
+          "type": "string"
+        },
+        "content": {
+          "description": "Metadata of the content of the file",
+          "type": "object",
+          "properties": {
+            "sizeInBytes": {
+              "type": "integer"
+            },
+            "mimeTypeName": {
+              "type": "string"
+            },
+            "mimeType": {
+              "type": "string"
+            },
+            "encoding": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "language"
+      ]
+    }
+  }
+}

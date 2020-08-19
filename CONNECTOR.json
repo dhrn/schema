@@ -1,0 +1,158 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Connector editor schema",
+  "additionalProperties": false,
+  "title": "Connector editor schema",
+  "type": "object",
+  "definitions": {
+    "connector-feature": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "outputs": {
+          "$ref": "#/definitions/connector-parameters"
+        },
+        "inputs": {
+          "$ref": "#/definitions/connector-parameters"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "connector-parameters": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "type"
+        ]
+      }
+    },
+    "connector-error": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "connector-config": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    }
+  },
+  "properties": {
+    "template": {
+      "description": "The connector's template",
+      "type": "string"
+    },
+    "name": {
+      "minLength": 1,
+      "pattern": "^[a-z]([-a-z0-9]{0,24}[a-z0-9])?$",
+      "description": "The connector's name",
+      "type": "string",
+      "maxLength": 26
+    },
+    "description": {
+      "description": "The connector's description",
+      "type": "string"
+    },
+    "id": {
+      "description": "The connector id",
+      "type": "string"
+    },
+    "actions": {
+      "default": {},
+      "additionalProperties": {
+        "$ref": "#/definitions/connector-feature"
+      },
+      "type": "object"
+    },
+    "config": {
+      "$ref": "#/definitions/connector-config"
+    },
+    "events": {
+      "default": {},
+      "additionalProperties": {
+        "$ref": "#/definitions/connector-feature"
+      },
+      "type": "object"
+    },
+    "errors": {
+      "$ref": "#/definitions/connector-error"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
